@@ -1222,6 +1222,7 @@ class Ticker(_YahooFinance):
         end=None,
         adj_timezone=True,
         adj_ohlc=False,
+        prepost=False,
     ):
         """
         Historical pricing data
@@ -1247,6 +1248,8 @@ class Ticker(_YahooFinance):
         adj_ohlc: bool, default False, optional
             Calculates an adjusted open, high, low and close prices according
             to split and dividend information
+        prepost: bool, default False, optional
+            Include Pre and Post market data.
 
         Returns
         -------
@@ -1278,6 +1281,7 @@ class Ticker(_YahooFinance):
                 "Interval values must be one of {}".format(", ".join(intervals))
             )
         params["interval"] = interval.lower()
+        params["includePrePost"] = prepost
         if params["interval"] == "1m" and period == "1mo":
             df = self._history_1m(adj_timezone, adj_ohlc)
         else:
